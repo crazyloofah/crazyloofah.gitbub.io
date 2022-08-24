@@ -1,0 +1,161 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Barcode+39+Text&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+body
+{
+    background-color: #000;
+    min-height: 100vh;
+}
+header
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.6s;
+    padding: 40px 100px;
+    z-index: 100000;
+}
+header.sticky
+{
+    padding: 5px 100px;
+    background: #fff;
+}
+header .logo
+{
+    position: relative;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    font-size: 2em;
+    letter-spacing: 2px;
+    transition: 0.6s;
+}
+header ul
+{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+header ul li
+{
+   position: relative;
+   list-style: none; 
+}
+header ul li a
+{
+    position: relative;
+    margin: 0 15px;
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 2px;
+    font-weight: 500;
+    transition: 0.6s;
+}
+.banner
+{
+    position: relative;
+    width: 100%;
+    height: 150vh;
+    /* background: url(https://www.desktopbackground.org/download/1920x1080/2012/03/11/357022_nature-landscape-black-and-white-moon-light-wallpaper-black-and_1920x1200_h.jpg); */
+    background-size: cover;
+    color: #fff;
+    padding-bottom: 0px;
+}
+header.sticky .logo,
+header.sticky ul li a
+{
+    color: #000
+}
+main 
+{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: 0.6s;
+    padding: 300px 100px;
+    z-index: 100000;
+}
+main img
+{
+    width: 200px;
+    height: fit-content;
+    border-radius: 100px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+main h1
+{
+    font-weight: 700;
+    font-size: 3em;
+    padding-bottom: 20px;
+    color: #fff;
+}
+
+main p
+{
+    font-weight: 600;
+    font-size: 2em;
+    text-align: center;
+    color: #fff;
+}
+
+footer 
+{
+    width: 100%;
+    height: 100px;
+    background-color: #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+footer .footerextra
+{
+    position: relative;
+    font-weight: 700;
+    color: #fff;
+    text-decoration: none;
+    font-size: 2em;
+    letter-spacing: 2px;
+    transition: 0.6s;
+    align-items: center;
+}
+footer ul
+{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+footer ul li
+{
+   position: relative;
+   list-style: none; 
+   align-items: center;
+   font-family:'Libre Barcode 39 Text', cursive;
+}
+footer ul li a
+{
+    position: relative;
+    margin: 0 15px;
+    text-decoration: none;
+    color: #fff;
+    letter-spacing: 2px;
+    font-weight: 500;
+    transition: 0.6s;
+    align-items: center;
+    font-family:'Libre Barcode 39 Text', cursive;
+}
