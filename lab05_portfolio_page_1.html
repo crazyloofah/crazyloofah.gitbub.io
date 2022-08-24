@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Portfolio</title>
+    <link rel="stylesheet" href="lab05_portfolio_page_1.css" />
+  </head>
+  <body>
+    <header>
+      <a href="#" class="logo">Matt's Portfolio</a>
+      <ul>
+        <li><a href="lab05_portfolio_page_2.html">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li><a href="#">Resume</a></li>
+      </ul>
+    </header>
+    <section class="banner"></article>
+    <script type="text/javascript">
+      window.addEventListener("scroll", function () {
+        var header = document.querySelector("header");
+        header.classList.toggle("sticky", window.scrollY > 0);
+      })
+    </script>
+    <main>
+      <h1>Oh, you're actually here?</h1>
+      <p>Hello, and welcome to my Portfolio! If you would like to learn more about what I can do for you, programming wise, or IF you just want to learn more about me while I talk about myself in the third-person, click the tabs above.</p>
+    </main>
+    <footer>
+      <section class="footerextra">
+        <ul>
+          <li><a href="#">Do</a></li>
+          <li><a href="#">you</a></li>
+          <li><a href="#">see</a></li>
+          <li><a href="#">this</a></li>
+          <li><a href="#">programming</a></li>
+          <li><a href="#">esque</a></li>
+          <li><a href="#">font</a></li>
+        </ul>
+      </section>
+    </footer>
+  </body>
+</html>
