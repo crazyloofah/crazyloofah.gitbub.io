@@ -35,7 +35,7 @@
       this.load.image('sky0', 'assets/Final/Background_0.png');
       this.load.image('sky1', 'assets/Final/Background_1.png');
       this.load.image('tiles', 'assets/mainlev_build.png')
-      this.load.tilemapTiledJSON('tilemap', 'assets/platform.json')
+      //this.load.tilemapTiledJSON('tilemap', 'assets/platform.json')
       this.load.image('ground', 'assets/platform.png');
       this.load.atlas('character', 'assets/test/robspritesheet.png', 'assets/test/robsprites.json');
     // this.load.spritesheet('dude', 
@@ -49,8 +49,8 @@
       {
         this.add.image(384, 208, 'sky0');
         this.add.image(384, 208, 'sky1');
-        const map = this.make.tilemap({key: 'tilemap'});
-        const tileset = map.addTilesetImage('mainlev_build', 'tiles');
+        // const map = this.make.tilemap({key: 'tilemap'});
+        // const tileset = map.addTilesetImage('mainlev_build', 'tiles');
         
         //creating 
         platforms = this.physics.add.staticGroup();
