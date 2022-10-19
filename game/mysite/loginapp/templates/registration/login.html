@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+  {% block title %}
+    Login 
+  {% endblock %}
+  {% block content %}
+
+    <h1 style="color: white;">Login</h1>
+    </br>
+    </br>
+    <div class="form-group" style="color: white;">
+    <form method="POST">
+      {% comment %} Needed for security reasons {% endcomment %}
+      {% csrf_token %}
+      {% comment %} as_p means every field will be wrapped in a p-tag {% endcomment %}
+      {{form.as_p}}
+      <button class="btn btn-dark">Login</button>
+    </div>
+    <div 
+    class="image" style="color: #fff; text-align: center;">
+    <img src="https://i.pinimg.com/736x/68/82/05/68820590936bcf2d9af525e94e7ce9de.jpg" style="border: 5px solid #fff">
+    <div class="bottom" style="bottom: 8px;">This is just a brief description of what the game is about. Hmmm... what should I put inside of this?</div>
+  </div>
+  {% endblock %}
