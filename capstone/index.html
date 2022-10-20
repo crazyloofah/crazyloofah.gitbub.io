@@ -29,6 +29,34 @@
     var cursors;
     var character;
 
+    class Enemy{
+
+      direction;
+      enemyObject;
+
+      constructor(){
+        this.direction = 1;
+        enemyObject = {};
+      }
+
+      createObject(parent, w, h, sprite, fnumber){
+        this.enemyObject = physics.add.sprite(w, h, sprite, fnumber).setScale(1.5, 1.5);
+      }
+
+      changeDirection(){
+        this.direction = this.direction *= -1;
+      }
+
+      addCollider(parent, secondObject, thirdObject){
+        parent.physics.add.collider(this.enemyObject, secondObject);
+        parent.physics.add.collider(this.enemyObject, thirdObject, ()=> {
+          this.changeDirection()
+        });
+      }
+
+
+    }
+
     function preload ()
     {
       {
@@ -42,11 +70,18 @@
     //     'assets/dude.png',
     //     { frameWidth: 32, frameHeight: 48 });
     //   }
+      this.load.atlas('???', '???', '???');
       }
     }
     function create ()
     { 
       {
+
+        this.e1 = new Enemy;
+        this.e1.createObject(this, '???', h-'???', 'enemy1', 0);
+        this.e1.addCollider(this, platforms, '???');
+
+
         this.add.image(384, 208, 'sky0');
         this.add.image(384, 208, 'sky1');
         // const map = this.make.tilemap({key: 'tilemap'});
@@ -144,6 +179,10 @@
 // {
 //     player.setVelocityY(-330);
 // }
+
+
+    this.e1.enemyObject.setVelocityX(50*this.e1.direction)
+  
     }
     </script>
 
