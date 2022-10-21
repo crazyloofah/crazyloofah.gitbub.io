@@ -9,6 +9,10 @@ class ProfileView(ListView):
     model = BlogPost 
     template_name = 'profile.html'
 
+class GameView(ListView):
+    model = BlogPost
+    template_name = 'game.html'
+
 
     
 
