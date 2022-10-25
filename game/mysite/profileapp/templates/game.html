@@ -1,3 +1,5 @@
+{% extends 'base.html' %}
+{% block content %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,15 +64,11 @@
       {
       this.load.image('sky0', 'assets/Final/Background_0.png');
       this.load.image('sky1', 'assets/Final/Background_1.png');
-      this.load.image('tiles', 'assets/mainlev_build.png')
-      //this.load.tilemapTiledJSON('tilemap', 'assets/platform.json')
       this.load.image('ground', 'assets/platform.png');
+      this.load.image('tiles', 'assets/tilesets/oak_woods_tileset.png');
+      this.load.tilemapTiledJSON('map', 'assets/tilemaps/level1.json');
       this.load.atlas('character', 'assets/test/robspritesheet.png', 'assets/test/robsprites.json');
-    // this.load.spritesheet('dude', 
-    //     'assets/dude.png',
-    //     { frameWidth: 32, frameHeight: 48 });
-    //   }
-      // this.load.atlas('???', '???', '???');
+     
       }
     }
     function create ()
@@ -84,12 +82,13 @@
 
         this.add.image(384, 208, 'sky0');
         this.add.image(384, 208, 'sky1');
-        // const map = this.make.tilemap({key: 'tilemap'});
-        // const tileset = map.addTilesetImage('mainlev_build', 'tiles');
+        
+        const map = this.make.tilemap({ key: 'map' });
+        const tileset = map.addTilesetImage('matts_simple_platformer', 'tiles');
+        const platforms = map.createStaticLayer('Platforms', tileset, 0, 0);
         
         //creating 
-        platforms = this.physics.add.staticGroup();
-        platforms.create(400, 400, 'ground').setScale(2).refreshBody();
+        platforms.setCollisionByExclusion(-1, true);
 
         // create all animations for game
         this.anims.create({key: 'standing', frames: this.anims.generateFrameNames('character', { prefix: 'standing', end: 1, zeroPad: 4 } 
@@ -101,8 +100,9 @@
         this.anims.create({key: 'jump', frames: this.anims.generateFrameNames('character', { prefix: 'jump', end: 13, zeroPad: 4 } 
         ), repeat: 0});
 
-        character = this.physics.add.sprite(200, 200, 'character');
+        character = this.physics.add.sprite(400, 100, 'character');
         this.physics.add.collider(character, platforms)
+        
 
         cursors = this.input.keyboard.createCursorKeys();
 
@@ -145,20 +145,20 @@
       if (cursors.left.isDown){    
         character.setVelocityX(-160);
         character.flipX = false;
-        if (character.body.touching.down){
+        if (character.body.onFloor()){
         character.anims.play('running', true);
         }
       } else if (cursors.right.isDown){
         character.setVelocityX(160);
         character.flipX = true;
-        if (character.body.touching.down){
+        if (character.body.onFloor()){
         character.anims.play('running', true);}
       } else {
-        if (character.body.touching.down){
+        if (character.body.onFloor()){
         character.setVelocityX(0);
         character.play('standing');}
       }
-      if (cursors.up.isDown && character.body.touching.down){
+      if (cursors.up.isDown && character.body.onFloor()){
         character.setVelocityY(-330);
         character.play('jump')
       }
@@ -188,3 +188,4 @@
 
 </body>
 </html>
+{% endblock %}
