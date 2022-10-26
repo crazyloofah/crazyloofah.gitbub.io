@@ -15,7 +15,7 @@
         physics: {
             default: 'arcade',
             arcade: {
-                gravity: {y: 300},
+                gravity: {y: 400},
                 debug: false
             }
         },
@@ -30,116 +30,116 @@
     var platforms;
     var cursors;
     var character;
-
-    // class Enemy{
-
-    //   direction;
-    //   enemyObject;
-
-    //   constructor(){
-    //     this.direction = 1;
-    //     enemyObject = {};
-    //   }
-
-    //   createObject(parent, w, h, sprite, fnumber){
-    //     this.enemyObject = physics.add.sprite(w, h, sprite, fnumber).setScale(1.5, 1.5);
-    //   }
-
-    //   changeDirection(){
-    //     this.direction = this.direction *= -1;
-    //   }
-
-    //   addCollider(parent, secondObject, thirdObject){
-    //     parent.physics.add.collider(this.enemyObject, secondObject);
-    //     parent.physics.add.collider(this.enemyObject, thirdObject, ()=> {
-    //       this.changeDirection()
-    //     });
-    //   }
-
-
-    // }
+    var score = 0;
+    var scoreText;
 
     function preload ()
     {
       {
       this.load.image('sky0', 'assets/Final/Background_0.png');
       this.load.image('sky1', 'assets/Final/Background_1.png');
+      this.load.image('enemy', 'assets/matts-badger.png');
+      this.load.image('star', 'assets/star.png');
       this.load.image('ground', 'assets/platform.png');
       this.load.image('tiles', 'assets/tilesets/oak_woods_tileset.png');
-      this.load.tilemapTiledJSON('map', 'assets/tilemaps/level1.json');
+      this.load.tilemapTiledJSON('map', 'assets/tilemaps/level3.json');
       this.load.atlas('character', 'assets/test/robspritesheet.png', 'assets/test/robsprites.json');
-     
       }
     }
     function create ()
     { 
       {
 
-        // this.e1 = new Enemy;
-        // this.e1.createObject(this, '???', h-'???', 'enemy1', 0);
-        // this.e1.addCollider(this, platforms, '???');
+        
+        
 
 
-        this.add.image(384, 208, 'sky0');
-        this.add.image(384, 208, 'sky1');
+        bg0 = this.add.image(384, 208, 'sky0');
+        bg1 = this.add.image(384, 208, 'sky1');
         
         const map = this.make.tilemap({ key: 'map' });
-        const tileset = map.addTilesetImage('matts_simple_platformer', 'tiles');
-        const platforms = map.createStaticLayer('Platforms', tileset, 0, 0);
-        
-        //creating 
+        const tileset = map.addTilesetImage('matt_simple_platformer', 'tiles');
+        const platforms = map.createStaticLayer('Platform', tileset, 0, 0);
         platforms.setCollisionByExclusion(-1, true);
 
-        // create all animations for game
         this.anims.create({key: 'standing', frames: this.anims.generateFrameNames('character', { prefix: 'standing', end: 1, zeroPad: 4 } 
         ), repeat: -1});
-
         this.anims.create({key: 'running', frames: this.anims.generateFrameNames('character', { prefix: 'running', end: 23, zeroPad: 4 } 
         ), repeat: -1});
-
         this.anims.create({key: 'jump', frames: this.anims.generateFrameNames('character', { prefix: 'jump', end: 13, zeroPad: 4 } 
         ), repeat: 0});
-
-        character = this.physics.add.sprite(400, 100, 'character');
+        character = this.physics.add.sprite(350, 100,  'character');
         this.physics.add.collider(character, platforms)
-        
-
         cursors = this.input.keyboard.createCursorKeys();
 
-    //   player = this.physics.add.sprite(100, 300, 'dude');
+        
+        
+        
 
-    //   player.setBounce(0.2);
-    //   player.setCollideWorldBounds(true);
+        stars = this.physics.add.group({
+          key: 'star',
+          repeat: 5,
+          setXY: { x: 40, y: 0, stepX: 125 }
+          });
+          stars.children.iterate(function (child) {
+          child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+          });
+        this.physics.add.collider(stars, platforms);
+        this.physics.add.overlap(character, stars, collectStar, null, this);
+        function collectStar (character, star)
+        {
+          star.disableBody(true, true);
+        }
 
-    //   this.anims.create({
-    //   key: 'left',
-    //   frames: this.anims.generateFrameNumbers('dude', { start: 0, end: 3 }),
-    //   frameRate: 10,
-    //   repeat: -1
-    // });
+        scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#fff' });
+        function collectStar (player, star)
+        {
+          star.disableBody(true, true);
+          score += 10;
+          scoreText.setText('Score: ' + score);
+          if (stars.countActive(true) === 0)
+          {
+            stars.children.iterate(function (child) {
+              child.enableBody(true, child.x, 0, true, true);
+            });
 
-    // this.anims.create({
-    // key: 'turn',
-    // frames: [ { key: 'dude', frame: 4 } ],
-    // frameRate: 20
-    // });
+            var x = (character.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+            var bomb = bombs.create(x, 16, 'enemy');
+            bomb.setBounce(1);
+            bomb.setCollideWorldBounds(true);
+            bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+          }
+        }
 
-    // this.anims.create({
-    // key: 'right',
-    // frames: this.anims.generateFrameNumbers('dude', { start: 5, end: 8 }),
-    // frameRate: 10,
-    // repeat: -1
-    // });
+        bombs = this.physics.add.group();
+        this.physics.add.collider(bombs, platforms);
+        this.physics.add.collider(character, bombs, hitBomb, null, this);
 
-    // this.physics.add.collider(player, platforms);
+        function hitBomb(character, bomb){
+          this.physics.pause();
+          character.setTint(0xff0000);
+          character.anims.play('standing');
+          gameOver = true;
+        }
+        camera = this.cameras.main;
+        camera.setBounds(0, 0, 2500, 800);
+        camera.startFollow(character, true, 0.05, 0.05, -200, 120);
 
-    // cursors = this.input.keyboard.createCursorKeys();
-    // }
+        hud = this.add.container(0, 0, [scoreText, ]);
+        //lock it to the camera
+        hud.setScrollFactor(0);
+        bg0.setScrollFactor(0);
+        bg1.setScrollFactor(0);
+
+        
+
     }
   }
 
   function update ()
   {
+  
+
 
 
       if (cursors.left.isDown){    
@@ -154,35 +154,14 @@
         if (character.body.onFloor()){
         character.anims.play('running', true);}
       } else {
-        if (character.body.onFloor()){
+        
         character.setVelocityX(0);
-        character.play('standing');}
+        character.play('standing');
       }
       if (cursors.up.isDown && character.body.onFloor()){
         character.setVelocityY(-330);
         character.play('jump')
       }
-// else if (cursors.right.isDown)
-// {
-//     player.setVelocityX(160);
-
-//     player.anims.play('right', true);
-// }
-// else
-// {
-//     player.setVelocityX(0);
-
-//     player.anims.play('turn');
-// }
-
-// if (cursors.up.isDown && player.body.touching.down)
-// {
-//     player.setVelocityY(-330);
-// }
-
-
-    // this.e1.enemyObject.setVelocityX(50*this.e1.direction)
-  
     }
     </script>
 
