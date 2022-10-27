@@ -49,11 +49,6 @@
     function create ()
     { 
       {
-
-        
-        
-
-
         bg0 = this.add.image(384, 208, 'sky0');
         bg1 = this.add.image(384, 208, 'sky1');
         
@@ -71,10 +66,6 @@
         character = this.physics.add.sprite(350, 100,  'character');
         this.physics.add.collider(character, platforms)
         cursors = this.input.keyboard.createCursorKeys();
-
-        
-        
-        
 
         stars = this.physics.add.group({
           key: 'star',
